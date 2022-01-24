@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Todo detail</title>
+</head>
+<body>
+<div>
+    <h1>Todo detail</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th >title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td data-th-text="${todo.title}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

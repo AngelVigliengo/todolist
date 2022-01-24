@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Todo List</title>
+	</head>
+	<style>
+	table, p, h1, li {
+	    font-family: arial, sans-serif;
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+	
+	td, th {
+	    border: 1px solid #dddddd;
+	    text-align: left;
+	    padding: 8px;
+	}
+	tr:nth-child(even) {
+	    background-color: #dddddd;
+	}
+	</style>
+	<body>
+<div>
+    <h1>Todo List</h1>
+
+    <table>
+        <tr data-th-each="todo : ${todos}">
+            <td data-th-text="${todo.title}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
