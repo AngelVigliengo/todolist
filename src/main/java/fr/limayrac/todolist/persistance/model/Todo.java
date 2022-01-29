@@ -20,4 +20,13 @@ public class Todo {
 
     @Column(name = "done")
     private boolean done;
+
+    @Column(name = "userId")
+    private Integer userId;
+
+    @Column(name = "description")
+    private String description;
+
+    public Todo() {
+    }
 }

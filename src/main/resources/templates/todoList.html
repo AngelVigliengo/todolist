@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>Todo List</title>
@@ -25,10 +25,32 @@
     <h1>Todo List</h1>
 
     <table>
-        <tr data-th-each="todo : ${todos}">
-            <td data-th-text="${todo.title}"></td>
+		<tr>
+			<td>Title</td>
+			<td>Description</td>
+			<td>Done</td>
+		</tr>
+        <tr th:each="todo : ${todos}" th:if="${!todos.isEmpty()}">
+            <td th:text="${todo.title}"></td>
+			<td th:text="${todo.description}"></td>
+			<td th:if="${todo.done}">Yes</td><td th:if="${!todo.done}">No</td>
+			<td>
+				<form action="#" th:action="@{/user/{userId}/todo/{todoId}/delete(userId=${todo.userId},todoId=${todo.id})}" method="post">
+					<p><input type="submit" value="Delete" /></p>
+				</form>
+			</td>
         </tr>
     </table>
+	<div th:value="${todos}" th:if="${!todos.isEmpty()}">
+		<form action="#" th:action="@{/user/{userId}/todo/create(userId=${todos[0].userId})}" method="get">
+			<p><input type="submit" value="Add a todo" /></p>
+		</form>
+		<a th:href="@{/users}"> Retour</a>
+	</div>
+	<div th:if="${todos.isEmpty()}">
+		<p>Todo List Empty</p></br>
+		<a th:href="@{/users}"> Retour</a>
+	</div>
 </div>
 </body>
 </html>

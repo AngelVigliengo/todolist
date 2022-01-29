@@ -2,10 +2,14 @@ package fr.limayrac.todolist.persistance.service;
 
 import fr.limayrac.todolist.persistance.model.User;
 import fr.limayrac.todolist.persistance.repository.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Data
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;

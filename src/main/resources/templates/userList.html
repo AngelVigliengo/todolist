@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>User List</title>
+	</head>
+	<style>
+	table, p, h1, li {
+	    font-family: arial, sans-serif;
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+	
+	td, th {
+	    border: 1px solid #dddddd;
+	    text-align: left;
+	    padding: 8px;
+	}
+	tr:nth-child(even) {
+	    background-color: #dddddd;
+	}
+	</style>
+	<body>
+<div>
+    <h1>User List</h1>
+
+    <table>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.nom}"></td>
+			<td th:text="${user.prenom}"></td>
+			<td>
+				<a th:href="@{/user(userId=${user.id})}"> Update</a>
+			</td>
+			<td>
+				<a th:href="@{/user/{userId}/todo/create(userId=${user.id})}"> Add Todo</a>
+			</td>
+			<td>
+				<a th:href="@{/user/{userId}/todos(userId=${user.id})}" th:if="${!user.todolist.isEmpty}"> View Todo</a>
+			</td>
+        </tr>
+    </table>
+	<br>
+	<a th:href="@{/}"> Retour</a>
+</div>
+</body>
+</html>
