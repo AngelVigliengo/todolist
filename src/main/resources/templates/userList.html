@@ -29,13 +29,18 @@
             <td th:text="${user.nom}"></td>
 			<td th:text="${user.prenom}"></td>
 			<td>
-				<a th:href="@{/user(userId=${user.id})}"> Update</a>
+				<a th:href="@{/user/{userId}/edit(userId=${user.id})}"> Update</a>
 			</td>
 			<td>
 				<a th:href="@{/user/{userId}/todo/create(userId=${user.id})}"> Add Todo</a>
 			</td>
 			<td>
-				<a th:href="@{/user/{userId}/todos(userId=${user.id})}" th:if="${!user.todolist.isEmpty}"> View Todo</a>
+				<a th:href="@{/user/{userId}/todos(userId=${user.id})}" > View Todo</a>
+			</td>
+			<td>
+				<form action="#" th:action="@{/user/{userId}/delete(userId=${user.id})}" method="post">
+					<p><input type="submit" value="Delete" /></p>
+				</form>
 			</td>
         </tr>
     </table>

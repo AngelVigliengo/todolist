@@ -2,7 +2,6 @@ package fr.limayrac.todolist.persistance.controller;
 
 import fr.limayrac.todolist.persistance.model.Todo;
 import fr.limayrac.todolist.persistance.model.User;
-import fr.limayrac.todolist.persistance.request.AddTodoRequest;
 import fr.limayrac.todolist.persistance.service.TodoService;
 import fr.limayrac.todolist.persistance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class UserController {
     @GetMapping("/user")
     public ModelAndView detailUser(@RequestParam Integer userId) {
         Optional<User> user = userService.getUser(userId);
-        return new ModelAndView("detailUser", "user", user.orElse(null));
+        return new ModelAndView("editUser", "user", user.orElse(null));
     }
 
     @GetMapping("/user/create")
@@ -66,18 +65,27 @@ public class UserController {
         return findAllUser();
     }
 
-    /*@GetMapping("/user/{userId}/edit")
-    public String afficheEditForm( Model model){
-        Compte compte = new Compte();
-        model.addAttribute("compte", compte);
-        return "compteEditerForm";
+    @PostMapping("/user/{userId}/delete")
+    public ModelAndView deleteUser(@PathVariable("userId") Integer userId) {
+        userService.deleteUser(userId);
+        return findAllUser();
     }
 
     @GetMapping("/user/{userId}/edit")
-    public ModelAndView editUser(@PathVariable("userId") Integer userId,@ModelAttribute("user") User user, ModelMap model) {
-        User User= new User();
-        return new ModelAndView("createUser", "user", User);
-    }*/
+    public ModelAndView editUser(@PathVariable("userId") Integer userId) {
+        User user = userService.getUser(userId).orElseThrow(() -> new NoSuchElementException());
+        return new ModelAndView("editUser", "user", user);
+    }
+
+    @PostMapping("/user/{userId}/edit")
+    public ModelAndView submitEditUser(@PathVariable("userId") Integer userId,@ModelAttribute("user") User user,ModelMap model){
+        user.setId(userId);
+        model.addAttribute("nom", user.getNom());
+        model.addAttribute("prenom", user.getPrenom());
+        userService.saveUser(user);
+
+        return findAllUser();
+    }
 
     @GetMapping("/user/{userId}/todo/create")
     public ModelAndView createTodo(@PathVariable("userId") Integer userId) {
