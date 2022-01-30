@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Todo detail</title>
+</head>
+<body>
+<div>
+    <h1>Edit a user</h1>
+
+    <form action="#" th:action="@{/user/{userId}/todo/{todoId}/edit(userId=${todo.userId},todoId=${todo.id})}" th:object="${todo}" method="post">
+        <label>title :</label>
+        <input type="text" th:field="*{title}" value="${todo.title}" /><br/>
+        <label>description :</label>
+        <textarea rows ="5" cols ="50" th:field="*{description}" value="${todo.description}" ></textarea><br/>
+        <label>done? :</label>
+        <input type = "radio" th:field="*{done}" value="yes"/>yes
+        <input type = "radio" th:field="*{done}" value="no"/>no<br/>
+        <p><input type="submit" value="Valider" /> <input type="reset" value="Annuler" /></p>
+    </form>
+    <br>
+    <a th:href="@{/}"> Retour</a>
+</div>
+</body>
+</html>

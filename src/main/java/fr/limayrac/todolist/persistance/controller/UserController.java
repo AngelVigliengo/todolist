@@ -115,9 +115,30 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}/todo/{todoId}/edit")
-    public ModelAndView editTodo() {
-        Todo todo= new Todo();
+    public ModelAndView editTodo(@PathVariable("userId") Integer userId,@PathVariable("todoId") Integer todoId) {
+        Todo todo = todoService.getTodo(todoId).orElseThrow(() -> new NoSuchElementException());
+
         return new ModelAndView("editTodo", "todo", todo);
+    }
+
+    @PostMapping("/user/{userId}/todo/{todoId}/edit")
+    public ModelAndView submitEditTodo(@PathVariable("userId") Integer userId,@PathVariable("todoId") Integer todoId,@ModelAttribute("todo") Todo todo,ModelMap model){
+        User user = userService.getUser(userId).orElseThrow(() -> new NoSuchElementException());
+        model.addAttribute("title", todo.getTitle());
+        model.addAttribute("description", todo.getDescription());
+        model.addAttribute("done", todo.isDone());
+        List<Todo> todoList = user.getTodolist();
+
+        for (int i=0;i<todoList.size();i++){
+            if (todoList.get(i).getId()==todoId)
+            {
+                todoList.set(i,todo);
+            }
+        }
+        user.setTodolist(todoList);
+        userService.saveUser(user);
+
+        return findAllTodoByUserId(user);
     }
 
 }

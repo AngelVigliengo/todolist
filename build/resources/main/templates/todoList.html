@@ -35,6 +35,9 @@
 			<td th:text="${todo.description}"></td>
 			<td th:if="${todo.done}">Yes</td><td th:if="${!todo.done}">No</td>
 			<td>
+				<a th:href="@{/user/{userId}/todo/{todoId}/edit(userId=${todo.userId},todoId=${todo.id})}"> Update</a>
+			</td>
+			<td>
 				<form action="#" th:action="@{/user/{userId}/todo/{todoId}/delete(userId=${todo.userId},todoId=${todo.id})}" method="post">
 					<p><input type="submit" value="Delete" /></p>
 				</form>
